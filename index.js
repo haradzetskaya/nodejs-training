@@ -1,6 +1,7 @@
 const https = require('https');
+const dotenv = require('dotenv');
 const { isWeekend, isMonday, isFriday, previousMonday, nextFriday, previousFriday, addWeeks, format } = require('date-fns')
-const API_KEY = '4k6hVqvFRyEg2dmxoK7T7kTCP1EJdHiVf8PgDM5W';
+dotenv.config();
 
 const now = new Date();
 const weekend = isWeekend(now);
@@ -20,7 +21,7 @@ if (weekend) {
 const startDate = format(start.toLocaleDateString(), formatDate);
 const endDate = format(end.toLocaleDateString(), formatDate);
 
-https.get('https://api.nasa.gov/neo/rest/v1/feed?start_date=' + startDate + '&end_date=' + endDate + '&api_key=' + API_KEY,
+https.get(process.env.URL +'?start_date=' + startDate + '&end_date=' + endDate + '&api_key=' + process.env.API_KEY,
     (response) => {
         let data = '';
         response.on('data', (chunk) => {
